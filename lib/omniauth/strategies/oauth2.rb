@@ -72,7 +72,8 @@ module OmniAuth
         else
           Rails.logger.info "Came here ....1"
           self.access_token = build_access_token
-          Rails.logger.info self.access_token
+          Rails.logger.info self.access_token.to_hash
+          Rails.logger.info access_token
           Rails.logger.info "Came here ....2"
           if access_token.expired?
             Rails.logger.info "Came here ....3"
