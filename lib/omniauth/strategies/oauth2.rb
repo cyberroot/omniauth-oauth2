@@ -67,6 +67,8 @@ module OmniAuth
         error = request.params["error_reason"] || request.params["error"]
         Rails.logger.info "==================================="
         Rails.logger.info "Came here 1"
+        Rails.logger.info error
+        Rails.logger.info request.params["error_reason"] || request.params["error"]
         Rails.logger.info request.params["error_reason"]
         Rails.logger.info request.params["error"]
         Rails.logger.info "==================================="
