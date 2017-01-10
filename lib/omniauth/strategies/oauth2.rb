@@ -71,29 +71,17 @@ module OmniAuth
           fail!(:csrf_detected, CallbackError.new(:csrf_detected, "CSRF detected"))
         else
           self.access_token = build_access_token
-          Rails.logger.info "==================================="
-          Rails.logger.info access_token.to_hash["expires_at"]
-          Rails.logger.info "==================================="
-          Rails.logger.info access_token.to_hash
-          Rails.logger.info "==================================="
-          Rails.logger.info self.access_token.to_hash
-          Rails.logger.info "==================================="
-          Rails.logger.info Time.now.to_i
-          Rails.logger.info "==================================="
-          Rails.logger.info access_token.expired?
-          Rails.logger.info "==================================="
           self.access_token = access_token.refresh! if access_token.expired?
-          Rails.logger.info "==================================="
-          Rails.logger.info "Came to last......"
           super
         end
-      rescue ::OAuth2::Error, CallbackError => e
-        fail!(:invalid_credentials, e)
-      rescue ::Timeout::Error, ::Errno::ETIMEDOUT => e
-        fail!(:timeout, e)
-      rescue ::SocketError => e
-        fail!(:failed_to_connect, e)
       end
+      # rescue ::OAuth2::Error, CallbackError => e
+      #   fail!(:invalid_credentials, e)
+      # rescue ::Timeout::Error, ::Errno::ETIMEDOUT => e
+      #   fail!(:timeout, e)
+      # rescue ::SocketError => e
+      #   fail!(:failed_to_connect, e)
+      # end
 
     protected
 
