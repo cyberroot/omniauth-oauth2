@@ -80,7 +80,11 @@ module OmniAuth
           Rails.logger.info "==================================="
           Rails.logger.info Time.now.to_i
           Rails.logger.info "==================================="
+          Rails.logger.info access_token.expired?
+          Rails.logger.info "==================================="
           self.access_token = access_token.refresh! if access_token.expired?
+          Rails.logger.info "==================================="
+          Rails.logger.info "Came to last......"
           super
         end
       rescue ::OAuth2::Error, CallbackError => e
