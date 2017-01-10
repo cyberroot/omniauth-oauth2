@@ -71,16 +71,21 @@ module OmniAuth
         Rails.logger.info request.params["error_reason"] || request.params["error"]
         Rails.logger.info request.params["error_reason"]
         Rails.logger.info request.params["error"]
+        
+        self.access_token = build_access_token
+        self.access_token = access_token.refresh! if access_token.expired?
+        super
+
         Rails.logger.info "==================================="
-        if false
-          fail!(error, CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"]))
-        elsif !options.provider_ignores_state && (request.params["state"].to_s.empty? || request.params["state"] != session.delete("omniauth.state"))
-          fail!(:csrf_detected, CallbackError.new(:csrf_detected, "CSRF detected"))
-        else
-          self.access_token = build_access_token
-          self.access_token = access_token.refresh! if access_token.expired?
-          super
-        end
+        # if false
+        #   fail!(error, CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"]))
+        # elsif !options.provider_ignores_state && (request.params["state"].to_s.empty? || request.params["state"] != session.delete("omniauth.state"))
+        #   fail!(:csrf_detected, CallbackError.new(:csrf_detected, "CSRF detected"))
+        # else
+        #   self.access_token = build_access_token
+        #   self.access_token = access_token.refresh! if access_token.expired?
+        #   super
+        # end
       rescue ::OAuth2::Error, CallbackError => e
         Rails.logger.info "==================================="
         Rails.logger.info "Came here"
