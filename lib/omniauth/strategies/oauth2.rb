@@ -68,9 +68,9 @@ module OmniAuth
         Rails.logger.info "==================================="
         Rails.logger.info "Came here 1"
         Rails.logger.info request.params["error_reason"]
-        Rails.logger.info request.params
+        Rails.logger.info request.params["error"]
         Rails.logger.info "==================================="
-        if error
+        if false
           fail!(error, CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"]))
         elsif !options.provider_ignores_state && (request.params["state"].to_s.empty? || request.params["state"] != session.delete("omniauth.state"))
           fail!(:csrf_detected, CallbackError.new(:csrf_detected, "CSRF detected"))
