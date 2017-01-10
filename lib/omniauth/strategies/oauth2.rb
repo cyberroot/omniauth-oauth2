@@ -73,6 +73,11 @@ module OmniAuth
           self.access_token = build_access_token
           Rails.logger.info "==================================="
           Rails.logger.info access_token.to_hash["expires_at"]
+          Rails.logger.info "==================================="
+          Rails.logger.info access_token.to_hash
+          Rails.logger.info "==================================="
+          Rails.logger.info self.access_token.to_hash
+          Rails.logger.info "==================================="
           Rails.logger.info Time.now.to_i
           Rails.logger.info "==================================="
           self.access_token = access_token.refresh! if access_token.expired?
