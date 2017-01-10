@@ -65,6 +65,11 @@ module OmniAuth
 
       def callback_phase # rubocop:disable AbcSize, CyclomaticComplexity, MethodLength, PerceivedComplexity
         error = request.params["error_reason"] || request.params["error"]
+        Rails.logger.info "==================================="
+        Rails.logger.info "Came here 1"
+        Rails.logger.info request.params["error_reason"]
+        Rails.logger.info request
+        Rails.logger.info "==================================="
         if error
           fail!(error, CallbackError.new(request.params["error"], request.params["error_description"] || request.params["error_reason"], request.params["error_uri"]))
         elsif !options.provider_ignores_state && (request.params["state"].to_s.empty? || request.params["state"] != session.delete("omniauth.state"))
